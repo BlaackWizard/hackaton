@@ -1,3 +1,0 @@
-from .base import AppException
-
-class NotFoundUserError(AppException): ...
