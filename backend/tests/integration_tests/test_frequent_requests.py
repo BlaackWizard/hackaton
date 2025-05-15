@@ -2,8 +2,8 @@ import pytest
 from datetime import datetime, timedelta
 from unittest.mock import AsyncMock
 
-from backend.src.application.dto import UserIdRequest
-from backend.src.application.frequent_requests import FrequentRequests
+from backend.src.access_service.application.dto import UserIdRequest
+from backend.src.access_service.application.frequent_requests import FrequentRequests
 
 
 @pytest.mark.asyncio

@@ -30,4 +30,5 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: energy-db
     ports:
-      - "5433:5432"  # Левый — внешний порт, правый — внутренний
+      - "5433:5432"
+
