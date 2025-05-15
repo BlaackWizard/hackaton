@@ -1,6 +1,6 @@
 from backend.src.access_service.models.message import Message
 from bot.services.base import BaseService
-
+from aiogram.enums.parse_mode import ParseMode
 from aiogram.types import Message
 
 class MessageSendService(BaseService):
@@ -14,6 +14,7 @@ class MessageSendService(BaseService):
                 f"{self.base_url}/energy-insight/send-message",
                 json_payload=payload
             )
-            await message.answer(text if status == 200 else f"Ошибка: {text}")
+            text = text.replace('"', '')
+            await message.answer(text if status == 200 else f"Ошибка: {text}", parse_mode=ParseMode.HTML)
         except Exception as e:
             await message.answer(f"Произошла ошибка: {e}")

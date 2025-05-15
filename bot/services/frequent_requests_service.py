@@ -18,12 +18,19 @@ class FrequentRequestService(BaseService):
             try:
                 data = json.loads(text)
                 if isinstance(data, list):
-                    formatted = "\n".join([f"{i+1}. {item}" for i, item in enumerate(data)])
+                    formatted = "\n".join([f"{i + 1}. {item}" for i, item in enumerate(data)])
                 elif isinstance(data, str):
                     lines = [line.strip().strip('"') for line in data.split('\n') if line.strip()]
-                    formatted = "\n".join([f"{i+1}. {line}" for i, line in enumerate(lines)])
+                    formatted = "\n".join([f"{i + 1}. {line}" for i, line in enumerate(lines)])
+                elif isinstance(data, dict):
+                    summary = data.get("summary")
+                    if summary:
+                        formatted = f"<i>{summary}</i>"
+                    else:
+                        formatted = "\n".join([f"<b>{key.capitalize()}:</b> {value}" for key, value in data.items()])
                 else:
-                    formatted = "Данные с сервера не распознаны."
+                    formatted = f"Данные с сервера не распознаны. {data}"
+
                 await message.answer(f"<b>Часто задаваемые вопросы:</b>\n\n{formatted}", parse_mode="HTML")
             except json.JSONDecodeError:
                 await message.answer("не форматируется в json")

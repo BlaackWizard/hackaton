@@ -24,7 +24,7 @@ logging.basicConfig(level=logging.INFO)
 
 @dp.message(Command("start"))
 async def start_handler(message: Message):
-    await message.answer("Добро пожаловать! Пишите ваш запрос или жалобу. Вот список команд:", reply_markup=actions_kb)
+    await message.answer("Добро пожаловать! Пишите ваш запрос или жалобу ✨. Вот список команд:", reply_markup=actions_kb)
 
 
 async def main():
