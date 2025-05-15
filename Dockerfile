@@ -1,10 +1,7 @@
-# Используем официальный Python образ как базовый
 FROM python:3.11-slim
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Устанавливаем системные зависимости
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
@@ -12,15 +9,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY backend /app/backend
+COPY bot /app/bot
+COPY entrypoint.sh /app/entrypoint.sh
+
+RUN chmod +x /app/entrypoint.sh
 
 ENV PYTHONPATH=/app
 
-EXPOSE 8000
-
-# Команда запуска приложения
-CMD ["python3", "backend/src/bootstrap/entrypoint/fast_api.py"]
+CMD ["/app/entrypoint.sh"]

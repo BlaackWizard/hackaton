@@ -13,10 +13,11 @@ from bot.handlers import frequest_requests
 from handlers.frequest_requests import router
 from keyboards.interactor_keyboard import actions_kb
 
-env_path = Path(__file__).parent / ".env"
+env_path = Path(__file__) / ".env.bot"
+
 load_dotenv(dotenv_path=env_path)
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8180561011:AAEXFBeRhrO1KySNWiwT8Ay_Pdv6y-mKatw")
 dp = Dispatcher()
 
 logging.basicConfig(level=logging.INFO)

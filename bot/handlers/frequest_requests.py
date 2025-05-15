@@ -10,7 +10,7 @@ from aiogram.filters import Command
 from aiogram.types.input_file import BufferedInputFile
 from dotenv import load_dotenv
 
-router = Router(name='actions')
+router = Router()
 
 MAX_MESSAGE_LENGTH = 4096
 
@@ -20,9 +20,7 @@ def load_data():
 
 
 def get_base_url():
-    BASE_URL = os.getenv("BASE_URL")
-    if not BASE_URL:
-        raise EnvironmentError("Переменная окружения BASE_URL не установлена.")
+    BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
     return BASE_URL
 
 
@@ -55,14 +53,14 @@ async def frequent_request_handler(message: Message):
                             [f"{i+1}. {line}" for i, line in enumerate(lines)]
                         )
                     else:
-                        formatted = "Формат данных с сервера не распознан."
+                        formatted = "Данные с сервера не распознаны."
 
                     await message.answer(f"<b>Часто задаваемые вопросы:</b>\n\n{formatted}", parse_mode="HTML")
 
                 except json.JSONDecodeError:
-                    await message.answer("Ошибка разбора ответа от сервера.")
+                    await message.answer("не форматируется в json")
     except Exception as e:
-        await message.answer(f"Произошла ошибка: {e}")
+        await message.answer(f"Error: {e}")
 
 
 def split_message(text: str, max_length: int = MAX_MESSAGE_LENGTH):
